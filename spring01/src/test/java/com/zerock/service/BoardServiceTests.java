@@ -29,12 +29,12 @@ public class BoardServiceTests {
 	@Test
 	public void testRegister() {
 		BoardVO board=new BoardVO();
-		board.setTitle("»õ Á¦¸ñ Å×½ºÆ®");
-		board.setContent("»õ ³»¿ë Å×½ºÆ®");
+		board.setTitle("ìƒˆ ì œëª© í…ŒìŠ¤íŠ¸");
+		board.setContent("ìƒˆ ë‚´ìš© í…ŒìŠ¤íŠ¸");
 		board.setWriter("newbie test");
 		
 		service.register(board);
-		log.info("»ı¼ºµÈ °Ô½Ã¹° ¹øÈ£"+board.getBno());
+		log.info("ìƒì„±ëœ ê²Œì‹œë¬¼ ë²ˆí˜¸"+board.getBno());
 	}
 	
 	@Test
@@ -44,7 +44,7 @@ public class BoardServiceTests {
 	
 	
 	@Test public void testDelete() {
-		log.info("»èÁ¦°á°ú:"+service.remove(62L));
+		log.info("ì‚­ì œê²°ê³¼:"+service.remove(62L));
 	}
 	 
 	
@@ -54,7 +54,7 @@ public class BoardServiceTests {
 		if(board==null) {
 			return;
 		}
-		board.setTitle("Á¦¸ñÀ» ¼öÁ¤ÇÕ´Ï´Ù.");
-		log.info("¼öÁ¤°á°ú:"+service.modify(board));
+		board.setTitle("ì œëª©ì„ ìˆ˜ì •í•©ë‹ˆë‹¤.");
+		log.info("ìˆ˜ì •ê²°ê³¼:"+service.modify(board));
 	}
 }

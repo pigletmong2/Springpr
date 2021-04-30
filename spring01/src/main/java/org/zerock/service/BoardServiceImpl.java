@@ -6,22 +6,22 @@ import org.springframework.stereotype.Service;
 import org.zerock.domain.BoardVO;
 import org.zerock.mapper.BoardMapper;
 
-import lombok.AllArgsConstructor; /*ÀüÃ¼ °ªÀ» ¸ğµÎ ¹Ş´Â Å¬·¡½º(»ı¼ºÀÚ)*/
-import lombok.extern.log4j.Log4j; /*·Î±×°ªÃâ·Â*/
+import lombok.AllArgsConstructor; /*ì „ì²´ ê°’ì„ ëª¨ë‘ ë°›ëŠ” í´ë˜ìŠ¤(ìƒì„±ì)*/
+import lombok.extern.log4j.Log4j; /*ë¡œê·¸ê°’ì¶œë ¥*/
 
 
 @Log4j
-//@service:½ºÇÁ¸µ¿¡ ºóÀ¸·Î µî·ÏµÇ´Â ¼­ºñ½º°´Ã¼ÀÇ ¾î³ëÅ×ÀÌ¼Ç
-//XMLÀÇ °æ¿ì <component-scan>¿¡¼­ Á¶»çÇÏ´Â ÆĞÅ°ÁöÀÇ Å¬·¡½ºµé Áß @service°¡ ÀÖ´Â Å¬·¡½ºÀÇ ÀÎ½ºÅÏ½º¸¦ ½ºÇÁ¸µÀÇ ºóÀ¸·Î ¼³Á¤
-@Service /* ½ºÇÁ¸µ4.3ºÎÅÍ´Â ´ÜÀÏ ÆÄ¶ó¹ÌÅÍ¸¦ ¹Ş´Â »ı¼ºÀÚÀÇ °æ¿ì, ÇÊ¿äÇÑ ÆÄ¶ó¹ÌÅÍ¸¦ ÀÚµ¿À¸·Î ÁÖÀÔ°¡´É */
-@AllArgsConstructor /* ¸ğµç ÆÄ¶ó¹ÌÅÍ¸¦ ÀÌ¿ëÇÏ´Â »ı¼ºÀÚ¸¦ »ı¼º */
+//@service:ìŠ¤í”„ë§ì— ë¹ˆìœ¼ë¡œ ë“±ë¡ë˜ëŠ” ì„œë¹„ìŠ¤ê°ì²´ì˜ ì–´ë…¸í…Œì´ì…˜
+//XMLì˜ ê²½ìš° <component-scan>ì—ì„œ ì¡°ì‚¬í•˜ëŠ” íŒ¨í‚¤ì§€ì˜ í´ë˜ìŠ¤ë“¤ ì¤‘ @serviceê°€ ìˆëŠ” í´ë˜ìŠ¤ì˜ ì¸ìŠ¤í„´ìŠ¤ë¥¼ ìŠ¤í”„ë§ì˜ ë¹ˆìœ¼ë¡œ ì„¤ì •
+@Service /* ìŠ¤í”„ë§4.3ë¶€í„°ëŠ” ë‹¨ì¼ íŒŒë¼ë¯¸í„°ë¥¼ ë°›ëŠ” ìƒì„±ìì˜ ê²½ìš°, í•„ìš”í•œ íŒŒë¼ë¯¸í„°ë¥¼ ìë™ìœ¼ë¡œ ì£¼ì…ê°€ëŠ¥ */
+@AllArgsConstructor /* ëª¨ë“  íŒŒë¼ë¯¸í„°ë¥¼ ì´ìš©í•˜ëŠ” ìƒì„±ìë¥¼ ìƒì„± */
 public class BoardServiceImpl implements BoardService{
 	private BoardMapper mapper;
 
-//	ºñÁî´Ï½º°èÃş¿¡¼­ »ç¿ëÇÏ±â ¶§¹®¿¡ ¼­ºñ½º ¾î³ëÅ×ÀÌ¼Ç »ç¿ë
-//	ÀÏÀ» ¼öÇàÇÏ±â À§ÇØ mapper¸¦ ÁÖÀÔÇØ¾ßÇÏ¹Ç·Î ¿ÀÅä¿ÍÀÌ¾îµå¸¦ ºÙÀÓ
-//	@Autowired:½ºÇÁ¸µÀÌ ºóÀÇ ¿ä±¸»çÇ×°ú ¸ÅÄªµÇ´Â ¾ÖÇÃ¸®ÄÉÀÌ¼Ç ÄÁÅØ½ºÆ®»ó¿¡¼­ ´Ù¸¥ºóÀ» Ã£¾Æ ºó°£ÀÇ ÀÇÁ¸¼ºÀ» ÀÚµ¿À¸·Î ¸¸Á·½ÃÅ°µµ·Ï ÇÏ´Â ¼ö´Ü
-//	lombokÀÌ ÀÚµ¿ »ı¼ºÀÚ¸¦ »ı¼ºÇÏ¹Ç·Î ±âº» »ı¼ºÀÚ´Â »èÁ¦¡é
+//	ë¹„ì¦ˆë‹ˆìŠ¤ê³„ì¸µì—ì„œ ì‚¬ìš©í•˜ê¸° ë•Œë¬¸ì— ì„œë¹„ìŠ¤ ì–´ë…¸í…Œì´ì…˜ ì‚¬ìš©
+//	ì¼ì„ ìˆ˜í–‰í•˜ê¸° ìœ„í•´ mapperë¥¼ ì£¼ì…í•´ì•¼í•˜ë¯€ë¡œ ì˜¤í† ì™€ì´ì–´ë“œë¥¼ ë¶™ì„
+//	@Autowired:ìŠ¤í”„ë§ì´ ë¹ˆì˜ ìš”êµ¬ì‚¬í•­ê³¼ ë§¤ì¹­ë˜ëŠ” ì• í”Œë¦¬ì¼€ì´ì…˜ ì»¨í…ìŠ¤íŠ¸ìƒì—ì„œ ë‹¤ë¥¸ë¹ˆì„ ì°¾ì•„ ë¹ˆê°„ì˜ ì˜ì¡´ì„±ì„ ìë™ìœ¼ë¡œ ë§Œì¡±ì‹œí‚¤ë„ë¡ í•˜ëŠ” ìˆ˜ë‹¨
+//	lombokì´ ìë™ ìƒì„±ìë¥¼ ìƒì„±í•˜ë¯€ë¡œ ê¸°ë³¸ ìƒì„±ìëŠ” ì‚­ì œâ†“
 //	public BoardServiceImpl() {}
 	
 	@Override
@@ -33,26 +33,27 @@ public class BoardServiceImpl implements BoardService{
 
 	@Override
 	public BoardVO get(Long bno) {
-		log.info("°Ë»ö:"+bno);
+		log.info("ê²€ìƒ‰:"+bno);
 		return mapper.read(bno);
 	}
 
 	@Override
 	public boolean modify(BoardVO board) {
-		log.info("¼öÁ¤:"+board);
-		return mapper.update(board) == 1; /* °ªÀÌ 1ÀÏ¶§ Áö¿öÁÜ */
+		log.info("ìˆ˜ì •:"+board);
+		return mapper.update(board) == 1; /* ê°’ì´ 1ì¼ë•Œ ì§€ì›Œì¤Œ */
 	}
 
 	@Override
 	public boolean remove(Long bno) {
-		log.info("»èÁ¦:"+bno);
+		log.info("ì‚­ì œ:"+bno);
 		return mapper.delete(bno)==1;
 	}
 
 	@Override
 	public List<BoardVO> getList() {
-		log.info("ÀüÃ¼Á¶È¸");
+		log.info("ì „ì²´ì¡°íšŒ");
 		return mapper.getList();
 	}
 	
 }
+

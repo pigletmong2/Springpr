@@ -21,15 +21,15 @@ public class BoardController {
 	private BoardService service;
 	
 	@GetMapping("/list")
-	public void list(Model model) { /* °Ô½Ã¹°(boardvo)ÀÇ ¸ñ·ÏÀ» model¿¡ ´ã¾Æ¼­ Àü´Ş */
+	public void list(Model model) { /* ê²Œì‹œë¬¼(boardvo)ì˜ ëª©ë¡ì„ modelì— ë‹´ì•„ì„œ ì „ë‹¬ */
 		log.info("list");
 		model.addAttribute("list",service.getList());
 	}
 	
 	
-//	Post¹æ½ÄÀ¸·Î Ã³¸®µÇ´Â µ¥ÀÌÅÍ¸¦ boardVO Å¸ÀÔÀÇ ÀÎ½ºÅÏ½º·Î ¹ÙÀÎµùÇØ¼­ ¸Ş¼­µå¿¡¼­ È°¿ë
-//	boardservice¸¦ ÀÌ¿ëÇØ µî·ÏÃ³¸®
-//	'redirect:'¸¦ ÀÌ¿ëÇØ¼­ ´Ù½Ã ¸ñ·ÏÀ¸·Î ÀÌµ¿
+//	Postë°©ì‹ìœ¼ë¡œ ì²˜ë¦¬ë˜ëŠ” ë°ì´í„°ë¥¼ boardVO íƒ€ì…ì˜ ì¸ìŠ¤í„´ìŠ¤ë¡œ ë°”ì¸ë”©í•´ì„œ ë©”ì„œë“œì—ì„œ í™œìš©
+//	boardserviceë¥¼ ì´ìš©í•´ ë“±ë¡ì²˜ë¦¬
+//	'redirect:'ë¥¼ ì´ìš©í•´ì„œ ë‹¤ì‹œ ëª©ë¡ìœ¼ë¡œ ì´ë™
 	@PostMapping("/register")
 	public String register(BoardVO board,RedirectAttributes rttr) {
 		log.info("register: " +board);

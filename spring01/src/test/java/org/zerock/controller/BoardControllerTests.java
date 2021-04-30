@@ -39,24 +39,24 @@ public class BoardControllerTests {
 		this.mockMvc=MockMvcBuilders.webAppContextSetup(ctx).build();
 	}
 	
-//	@Test
-//	public void testList() throws Exception {
-//		log.info(mockMvc.perform(MockMvcRequestBuilders.get("/board/list"))
-//				.andReturn()
-//				.getModelAndView()
-//				.getModelMap());
-//	}
-//	
-//	@Test
-//	public void testRegister() throws Exception { /* µî·ÏÃ³¸® Å×½ºÆ® */
-//		String resultPage=mockMvc.perform(MockMvcRequestBuilders.post("/board/register")
-//				.param("title", "Å×½ºÆ® »õ±Û Á¦¸ñ")
-//				.param("content", "Å×½ºÆ® »õ±Û ³»¿ë")
-//				.param("writer", "user00")
-//				).andReturn().getModelAndView().getViewName();
-//		
-//		log.info(resultPage);
-//	}
+	@Test
+	public void testList() throws Exception {
+		log.info(mockMvc.perform(MockMvcRequestBuilders.get("/board/list"))
+				.andReturn()
+				.getModelAndView()
+				.getModelMap());
+	}
+	
+	@Test
+	public void testRegister() throws Exception { /* ë“±ë¡ì²˜ë¦¬ í…ŒìŠ¤íŠ¸ */
+		String resultPage=mockMvc.perform(MockMvcRequestBuilders.post("/board/register")
+				.param("title", "í…ŒìŠ¤íŠ¸ ìƒˆê¸€ ì œëª©")
+				.param("content", "í…ŒìŠ¤íŠ¸ ìƒˆê¸€ ë‚´ìš©")
+				.param("writer", "user00")
+				).andReturn().getModelAndView().getViewName();
+		
+		log.info(resultPage);
+	}
 	
 	@Test
 	public void testGet() throws Exception{
@@ -67,18 +67,18 @@ public class BoardControllerTests {
 				.getModelAndView().getModelMap());
 	}
 	
-//	@Test
-//	public void testModify() throws Exception {
-//		String resultPage=mockMvc
-//				.perform(MockMvcRequestBuilders.post("/board/modify")
-//				.param("bno", "2")
-//				.param("title", "¼öÁ¤µÈ Å×½ºÆ® »õ±Û Á¦¸ñ")
-//				.param("content","¼öÁ¤µÈ Å×½ºÆ® »õ±Û ³»¿ë")
-//				.param("writer","user00"))
-//				.andReturn().getModelAndView().getViewName();
-//		
-//		log.info(resultPage);
-//	}
+	@Test
+	public void testModify() throws Exception {
+		String resultPage=mockMvc
+				.perform(MockMvcRequestBuilders.post("/board/modify")
+				.param("bno", "2")
+				.param("title", "ìˆ˜ì •ëœ í…ŒìŠ¤íŠ¸ ìƒˆê¸€ ì œëª©")
+				.param("content","ìˆ˜ì •ëœ í…ŒìŠ¤íŠ¸ ìƒˆê¸€ ë‚´ìš©")
+				.param("writer","user00"))
+				.andReturn().getModelAndView().getViewName();
+		
+		log.info(resultPage);
+	}
 	
 	@Test
 	public void textRemove() throws Exception {

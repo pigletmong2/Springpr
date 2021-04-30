@@ -5,12 +5,13 @@ import java.util.List;
 import org.zerock.domain.BoardVO;
 
 public interface BoardMapper {
-//	@Select("select*from tbl_board where bno>0") XMLÆÄÀÏ¿¡ ÀÛ¼º
+//	@Select("select*from tbl_board where bno>0") XMLíŒŒì¼ì— ì‘ì„±
 	public List<BoardVO> getList();
 	
-	public void insert(BoardVO board); /* insert¸¸ Ã³¸®µÇ°í, »ı¼ºµÈ pk°ªÀ» ¾ËÇÊ¿ä°¡ ¾ø´Â °æ¿ì */
-	public void insertSelectKey(BoardVO board); /* insert¹®ÀÌ ½ÇÇàµÇ°í, »ı¼ºµÈ pk°ªÀ» ¾Ë¾Æ¾ß ÇÏ´Â °æ¿ì<selectkey>»ç¿ë */
+	public void insert(BoardVO board); /* insertë§Œ ì²˜ë¦¬ë˜ê³ , ìƒì„±ëœ pkê°’ì„ ì•Œí•„ìš”ê°€ ì—†ëŠ” ê²½ìš° */
+	public void insertSelectKey(BoardVO board); /* insertë¬¸ì´ ì‹¤í–‰ë˜ê³ , ìƒì„±ëœ pkê°’ì„ ì•Œì•„ì•¼ í•˜ëŠ” ê²½ìš°<selectkey>ì‚¬ìš© */
 	public BoardVO read(Long bno);
 	public int delete(Long bno);
 	public int update(BoardVO board);
 }
+

@@ -5,15 +5,15 @@ import java.util.List;
 import org.zerock.domain.BoardVO;
 
 
-//ºñÁî´Ï½º °èÃþ, ±¸¸Å¼­ºñ½º-»óÇ°/È¸¿øÃ³¸®°´Ã¼
-//¼îÇÎ¸ùÀÇ ·ÎÁ÷ ¿¹: ¹°°ÇÀ» ±¸¸ÅÇÑ È¸¿ø¿¡°Ô Æ÷ÀÎÆ® Àû¸³
-//¿µ¼Ó°èÃþ(»óÇ°°ú È¸¿øÀ» ³ª´²¼­ ¼³°è)/ºñÁî´Ï½º°èÃþ¼³°è(»óÇ°¿µ¿ª°ú È¸¿ø¿µ¿ªÀ» µ¿½Ã¿¡ ´Ù¿ëÇÏ¿© ÇÏ³ªÀÇ ·ÎÁ÷Ã³¸®)
-//°¢ °èÃþ°£ ¿¬°áÀº ÀÎÅÍÆäÀÌ½º¸¦ »ç¿ëÇÏ¿© ´À½¼ÇÑ ¿¬°á(°áÇÕ)À» ÇÔ
+//ë¹„ì¦ˆë‹ˆìŠ¤ ê³„ì¸µ, êµ¬ë§¤ì„œë¹„ìŠ¤-ìƒí’ˆ/íšŒì›ì²˜ë¦¬ê°ì²´
+//ì‡¼í•‘ëª½ì˜ ë¡œì§ ì˜ˆ: ë¬¼ê±´ì„ êµ¬ë§¤í•œ íšŒì›ì—ê²Œ í¬ì¸íŠ¸ ì ë¦½
+//ì˜ì†ê³„ì¸µ(ìƒí’ˆê³¼ íšŒì›ì„ ë‚˜ëˆ ì„œ ì„¤ê³„)/ë¹„ì¦ˆë‹ˆìŠ¤ê³„ì¸µì„¤ê³„(ìƒí’ˆì˜ì—­ê³¼ íšŒì›ì˜ì—­ì„ ë™ì‹œì— ë‹¤ìš©í•˜ì—¬ í•˜ë‚˜ì˜ ë¡œì§ì²˜ë¦¬)
+//ê° ê³„ì¸µê°„ ì—°ê²°ì€ ì¸í„°íŽ˜ì´ìŠ¤ë¥¼ ì‚¬ìš©í•˜ì—¬ ëŠìŠ¨í•œ ì—°ê²°(ê²°í•©)ì„ í•¨
 public interface BoardService {
 	public void register(BoardVO board);
-	public BoardVO get(Long bno); /* ÁöÁ¤ÇÑ °Ô½Ã¹° Á¶È¸ */
+	public BoardVO get(Long bno); /* ì§€ì •í•œ ê²Œì‹œë¬¼ ì¡°íšŒ */
 	public boolean modify(BoardVO board);
 	public boolean remove(Long bno);
-	public List<BoardVO> getList(); /* get():Æ¯Á¤°Ô½Ã¹°À» °¡Á®¿È ,getList():ÀüÃ¼¸®½ºÆ® */
+	public List<BoardVO> getList(); /* get():íŠ¹ì •ê²Œì‹œë¬¼ì„ ê°€ì ¸ì˜´ ,getList():ì „ì²´ë¦¬ìŠ¤íŠ¸ */
 
 }

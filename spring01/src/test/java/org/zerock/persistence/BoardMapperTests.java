@@ -20,25 +20,25 @@ public class BoardMapperTests {
 
 	
 	@Test 
-	public void testGetList() { //ÀÛ¼ºÇÑ mapper interfaceÅ×½ºÆ®
+	public void testGetList() { //ì‘ì„±í•œ mapper interfaceí…ŒìŠ¤íŠ¸
 	  mapper.getList().forEach(board ->log.info(board)); }
 	
 	@Test public void testInsert() {
 	  BoardVO board = new BoardVO();
-	  board.setTitle("»õ·Î ÀÛ¼ºÇÏ´Â ±Û"); board.setContent("»õ·Î ÀÛ¼ºÇÏ´Â ³»¿ë");
+	  board.setTitle("ìƒˆë¡œ ì‘ì„±í•˜ëŠ” ê¸€"); board.setContent("ìƒˆë¡œ ì‘ì„±í•˜ëŠ” ë‚´ìš©");
 	  board.setWriter("newbie"); log.info("1.-----------------------------");
 	  mapper.insertSelectKey(board); log.info("2.-----------------------------");
-	  log.info("ÀÚ·áÀÔ·Â:"+board); }
+	  log.info("ìë£Œì…ë ¥:"+board); }
 	
-	@Test public void testRead() { // Á¸ÀçÇÏ´Â °Ô½Ã¹° ¹øÈ£·Î Å×½ºÆ®
+	@Test public void testRead() { // ì¡´ì¬í•˜ëŠ” ê²Œì‹œë¬¼ ë²ˆí˜¸ë¡œ í…ŒìŠ¤íŠ¸
 	  BoardVO board=mapper.read(5L);
 	  log.info(board);
-	} /* 5(L)=longÅ¸ÀÔ,Bno="5" */
+	} /* 5(L)=longíƒ€ì…,Bno="5" */
 	
 
 	@Test
 	public void testDelete() {
-		log.info("»èÁ¦ÇÒ ¹øÈ£ :"+mapper.delete(61L));
+		log.info("ì‚­ì œí•  ë²ˆí˜¸ :"+mapper.delete(61L));
 		
 	}
 
@@ -46,12 +46,11 @@ public class BoardMapperTests {
 	public void testUpdate() {
 		BoardVO board = new BoardVO();
 		board.setBno(41L);
-		board.setTitle("¼öÁ¤Á¦¸ñ");
-		board.setContent("¼öÁ¤³»¿ë");
+		board.setTitle("ìˆ˜ì •ì œëª©");
+		board.setContent("ìˆ˜ì •ë‚´ìš©");
 		board.setWriter("user00");
 
 		int count = mapper.update(board);
-		log.info("¼öÁ¤ÇÒ ¹øÈ£ :" + count);
+		log.info("ìˆ˜ì •í•  ë²ˆí˜¸ :" + count);
 	}
-
 }
