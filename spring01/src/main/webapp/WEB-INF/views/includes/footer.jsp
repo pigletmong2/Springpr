@@ -1,34 +1,41 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html lang="en"></html>
+     </div>
+        <!-- /#page-wrapper -->
 
-<head>
-<meta charset="UTF-8">
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description content="">
-<meta name="author" content="">
+    </div>
+    <!-- /#wrapper -->
 
-<title>SB Admin 2 - Bootstrap Admin Theme</title>
+    <!-- jQuery 주석처리 -->
+<!--     <script src="/resources/vendor/jquery/jquery.min.js"></script> -->
 
-<!-- Bootstrap Core Css -->
-<link href="/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/resources/vendor/bootstrap/js/bootstrap.min.js"></script>
 
-<!-- MetisMenu CSS -->
-<link href="/resources/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="/resources/vendor/metisMenu/metisMenu.min.js"></script>
 
-<!-- DataTables CSS -->
-<link href="/resources/vendor/datatables-plugins/dataTables.bootstrap.css" rel="stylesheet">
+    <!-- DataTables JavaScript -->
+    <script src="/resources/vendor/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="/resources/vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
+    <script src="/resources/vendor/datatables-responsive/dataTables.responsive.js"></script>
 
-<!-- DataTables Responsive CSS -->
-<link href="/resources/vendor/datatables-responsive/dataTables.responsive.css" rel="stylesheet">
+    <!-- Custom Theme JavaScript -->
+    <script src="/resources/dist/js/sb-admin-2.js"></script>
 
-<!-- Custom CSS -->
-<link href="/resources/dist/css/sb-admin-2.css" rel="stylesheet">
-</head>
-<body>
+    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+<script>
+  $(document).ready(function() {
+    $('#dataTables-example').DataTable({
+      responsive: true
+    });
+    $(".sidebar-nav")
+      .attr("class","sidebar-nav navbar-collapse collapse")
+      .attr("aria-expanded",'false')
+      .attr("style","height:1px");
+  });
+</script>
 
 </body>
+
 </html>

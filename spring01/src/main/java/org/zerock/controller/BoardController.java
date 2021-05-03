@@ -5,6 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.zerock.domain.BoardVO;
@@ -16,6 +17,7 @@ import lombok.extern.log4j.Log4j;
 @Controller
 @Log4j
 @RequestMapping("/board/*")
+//실행안됨@RequestMapping(value="/board/*",method={RequestMethod.GET,RequestMethod.POST})
 @AllArgsConstructor
 public class BoardController {
 	private BoardService service;
@@ -37,6 +39,11 @@ public class BoardController {
 		rttr.addFlashAttribute("result",board.getBno());
 		return "redirect:/board/list";
 	}
+	
+//	게시물 등록작업은 post로 처리하지만 화면에서 입력을 받아야 하므로 get 방식으로 입력페이지를 볼 수 있도록
+//	BoardController에 GetMapping 메서드 추가
+	@GetMapping("/register")
+	public void register() {}
 	
 	@GetMapping("/get")
 	public void get(@RequestParam("bno") Long bno,Model model){
