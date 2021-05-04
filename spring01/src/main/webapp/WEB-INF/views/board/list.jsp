@@ -56,7 +56,11 @@
 	<div class="row">
 		<div class="col-lg-12">
 			<div class="panel panel-default">
-				<div class="panel-heading">Board List Page</div>
+				<div class="panel-heading">Board List Page
+				<!-- 등록 버튼 -->
+				<button id='regBtn' type="button" class="btn btn-xs pull-right">
+				새글작성</button>
+				</div>
 				<!-- /.panel-heading -->
 				<div class="panel-body">
 					<table class="table table-striped table-bordered table-hover">
@@ -74,7 +78,10 @@
 							<c:forEach items="${list}" var="board">
 								<tr>
 									<td><c:out value="${board.bno }"/></td>
-									<td><c:out value="${board.title }"/></td>
+									<!-- 목록페이지 게시물 제목에 <a>태그를 적용해서 조회 페이지로 이동 -->
+									<!-- target='_blank' =>'새창으로 열기' -->
+									<td><a href='/board/get?bno=<c:out value="${board.bno}"/>'>  
+									<c:out value="${board.title }"/></a></td>
 									<td><c:out value="${board.writer }"/></td>
 									<td><fmt:formatDate value="${board.regdate }" pattern="yyyy-MM-dd"/></td>
 									<td><fmt:formatDate value="${board.updateDate }" pattern="yyyy-MM-dd"/></td>
@@ -127,8 +134,11 @@
 			var result='<c:out value="${result}"/>';
 			checkModal(result);
 			
+			/* 모달창이 새게시물을 등록했을 때만 뜨도록 설정,뒤로가기 실행시 실행되지 않도록 */
+			history.replaceState({},null,null); 
+			
 			function checkModal(result){
-				if(result===''){
+				if(result===''||history.state){
 					return;
 				}
 				if(parseInt(result)>0){
@@ -136,6 +146,10 @@
 				}
 				$("#myModal").modal("show");
 			}
+			/* 목록페이지 상단에 등록 버튼을 추가하여 처리할 수 있도록 함 */
+			$("#regBtn").on("click",function(){ 
+				self.location="/board/register";
+			});
 		});
 	</script>
 </body>

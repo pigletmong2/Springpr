@@ -6,7 +6,7 @@
     </div>
     <!-- /#wrapper -->
 
-    <!-- jQuery 주석처리 -->
+    <!-- jQuery 주석처리, header.jsp에 선언 -->
 <!--     <script src="/resources/vendor/jquery/jquery.min.js"></script> -->
 
     <!-- Bootstrap Core JavaScript -->

@@ -45,9 +45,9 @@ public class BoardController {
 	@GetMapping("/register")
 	public void register() {}
 	
-	@GetMapping("/get")
+	@GetMapping({"/get","/modify","/remove"}) /* /modify 추가 */
 	public void get(@RequestParam("bno") Long bno,Model model){
-		log.info("/get");
+		log.info("/get or modify");
 		model.addAttribute("board",service.get(bno));
 	}
 	
@@ -60,6 +60,7 @@ public class BoardController {
 		}
 		return "redirect:/board/list";
 	}
+	
 	
 	@PostMapping("/remove")
 	public String remove(@RequestParam("bno") Long bno,RedirectAttributes rttr) {
