@@ -38,54 +38,65 @@ public class BoardControllerTests {
 	public void setup() {
 		this.mockMvc=MockMvcBuilders.webAppContextSetup(ctx).build();
 	}
+//	
+//	@Test
+//	public void testList() throws Exception {
+//		log.info(mockMvc.perform(MockMvcRequestBuilders.get("/board/list"))
+//				.andReturn()
+//				.getModelAndView()
+//				.getModelMap());
+//	}
 	
 	@Test
-	public void testList() throws Exception {
-		log.info(mockMvc.perform(MockMvcRequestBuilders.get("/board/list"))
-				.andReturn()
-				.getModelAndView()
-				.getModelMap());
+	public void testListPaging() throws Exception{
+		log.info(mockMvc.perform(
+				MockMvcRequestBuilders.get("/board/list")
+				.param("pageNum", "2")
+						.param("amount",
+								"10")) /* amount가 추가된 데이터 수보다 많을 경우 console창에 표시되지 않음 */
+				.andReturn().getModelAndView().getModelMap());
+				
 	}
 	
-	@Test
-	public void testRegister() throws Exception { /* 등록처리 테스트 */
-		String resultPage=mockMvc.perform(MockMvcRequestBuilders.post("/board/register")
-				.param("title", "테스트 새글 제목")
-				.param("content", "테스트 새글 내용")
-				.param("writer", "user00")
-				).andReturn().getModelAndView().getViewName();
-		
-		log.info(resultPage);
-	}
-	
-	@Test
-	public void testGet() throws Exception{
-		log.info(mockMvc.perform(MockMvcRequestBuilders
-				.get("/board/get")
-				.param("bno","2"))
-				.andReturn()
-				.getModelAndView().getModelMap());
-	}
-	
-	@Test
-	public void testModify() throws Exception {
-		String resultPage=mockMvc
-				.perform(MockMvcRequestBuilders.post("/board/modify")
-				.param("bno", "2")
-				.param("title", "수정된 테스트 새글 제목")
-				.param("content","수정된 테스트 새글 내용")
-				.param("writer","user00"))
-				.andReturn().getModelAndView().getViewName();
-		
-		log.info(resultPage);
-	}
-	
-	@Test
-	public void textRemove() throws Exception {
-		String resultPage=mockMvc
-				.perform(MockMvcRequestBuilders.post("/board/remove")
-				.param("bno", "43")
-				).andReturn().getModelAndView().getViewName();
-		log.info(resultPage);
-	}
+//	@Test
+//	public void testRegister() throws Exception { /* 등록처리 테스트 */
+//		String resultPage=mockMvc.perform(MockMvcRequestBuilders.post("/board/register")
+//				.param("title", "테스트 새글 제목")
+//				.param("content", "테스트 새글 내용")
+//				.param("writer", "user00")
+//				).andReturn().getModelAndView().getViewName();
+//		
+//		log.info(resultPage);
+//	}
+//	
+//	@Test
+//	public void testGet() throws Exception{
+//		log.info(mockMvc.perform(MockMvcRequestBuilders
+//				.get("/board/get")
+//				.param("bno","2"))
+//				.andReturn()
+//				.getModelAndView().getModelMap());
+//	}
+//	
+//	@Test
+//	public void testModify() throws Exception {
+//		String resultPage=mockMvc
+//				.perform(MockMvcRequestBuilders.post("/board/modify")
+//				.param("bno", "2")
+//				.param("title", "수정된 테스트 새글 제목")
+//				.param("content","수정된 테스트 새글 내용")
+//				.param("writer","user00"))
+//				.andReturn().getModelAndView().getViewName();
+//		
+//		log.info(resultPage);
+//	}
+//	
+//	@Test
+//	public void textRemove() throws Exception {
+//		String resultPage=mockMvc
+//				.perform(MockMvcRequestBuilders.post("/board/remove")
+//				.param("bno", "43")
+//				).andReturn().getModelAndView().getViewName();
+//		log.info(resultPage);
+//	}
 }

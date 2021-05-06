@@ -60,7 +60,7 @@
 
 	<div class="row">
 		<div class="col-lg-12">
-			<h1 class="page-header">조회하기</h1>
+			<h1 class="page-header">수정하기</h1>
 		</div>
 		<!-- /.col-lg-12 -->
 	</div>
@@ -127,13 +127,12 @@
 		<!-- end panel -->
 	</div>
 	<!-- /.row -->
-	<%@include file="../includes/footer.jsp"%>
 	<script type="text/javascript">
 	$(document).ready(function(){
 		
 		var formObj=$("form");
 		
-		$('button').on("click",function(e)){
+		$('button').on("click",function(e){
 			e.preventDefault();
 			/* a태그나 submit태그를 누르면 href를 통해 이동하거나 창이 새로고침하여 실행됨
 				preventDefault는 이러한 동생을 막아줄 수 있음
@@ -149,7 +148,12 @@
 			
 			if(operation==='remove'){
 				formObj.attr("action","/board/remove");
-			}else if(operation==='list'){
+			}/* else if(operation === 'remove') {
+						console.log("click remove");
+						formObj.submit();
+						
+					
+			} */else if(operation==='list'){
 				//move to list
 				formObj.attr("action","/board/list").attr("method","get");
 				formObj.empty();
@@ -158,6 +162,8 @@
 		});
 	});
 	</script>
+	<%@include file="../includes/footer.jsp"%>
+	
 
 </body>
 

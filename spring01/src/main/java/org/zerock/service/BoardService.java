@@ -3,6 +3,7 @@ package org.zerock.service;
 import java.util.List;
 
 import org.zerock.domain.BoardVO;
+import org.zerock.domain.Criteria;
 
 
 //비즈니스 계층, 구매서비스-상품/회원처리객체
@@ -14,6 +15,7 @@ public interface BoardService {
 	public BoardVO get(Long bno); /* 지정한 게시물 조회 */
 	public boolean modify(BoardVO board);
 	public boolean remove(Long bno);
-	public List<BoardVO> getList(); /* get():특정게시물을 가져옴 ,getList():전체리스트 */
+//	public List<BoardVO> getList(); /* get():특정게시물을 가져옴 ,getList():전체리스트 */
+	public List<BoardVO> getList(Criteria cri);
 
 }

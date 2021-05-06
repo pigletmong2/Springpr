@@ -2,49 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %><!--아래와 같이 jstl를 입력하지 않으면 오류발생  -->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %><!-- JSTL의 출력과 포맷을 적용할 수 있는 태그 라이브러리 -->
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="">
-<meta name="author" content="">
-
-<title>SB Admin 2 - Bootstrap Admin Theme</title>
-
-
-<!-- Bootstrap Core Css -->
-<link href="/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-<!-- MetisMenu CSS -->
-<link href="/resources/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
-
-<!-- DataTables CSS -->
-<link href="/resources/vendor/datatables-plugins/dataTables.bootstrap.css" rel="stylesheet">
-
-<!-- DataTables Responsive CSS -->
-<link href="/resources/vendor/datatables-responsive/dataTables.responsive.css" rel="stylesheet">
-
-<!-- Custom CSS -->
-<link href="/resources/dist/css/sb-admin-2.css" rel="stylesheet">
-
-<!-- Custom Fonts -->
-<link href="/resources/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
-<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-<!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-</head>
-
-<body>
- 	<%@include file="../includes/header.jsp"%>
+<%@include file="../includes/header.jsp"%>
 	
 	<div class="row">
 		<div class="col-lg-12">
@@ -56,8 +15,8 @@
 	<div class="row">
 		<div class="col-lg-12">
 			<div class="panel panel-default">
-				<div class="panel-heading">Board List Page
 				<!-- 등록 버튼 -->
+				<div class="panel-heading">게시판
 				<button id='regBtn' type="button" class="btn btn-xs pull-right">
 				새글작성</button>
 				</div>
@@ -74,60 +33,99 @@
 							</tr>
 						</thead>
 						<!-- model에 담긴 데이터 출력 -->
-						<tbody>
+						<!-- <tbody> -->
 							<c:forEach items="${list}" var="board">
 								<tr>
-									<td><c:out value="${board.bno }"/></td>
+									<td><c:out value="${board.bno}"/></td>
+									
 									<!-- 목록페이지 게시물 제목에 <a>태그를 적용해서 조회 페이지로 이동 -->
 									<!-- target='_blank' =>'새창으로 열기' -->
-									<td><a href='/board/get?bno=<c:out value="${board.bno}"/>'>  
-									<c:out value="${board.title }"/></a></td>
-									<td><c:out value="${board.writer }"/></td>
-									<td><fmt:formatDate value="${board.regdate }" pattern="yyyy-MM-dd"/></td>
-									<td><fmt:formatDate value="${board.updateDate }" pattern="yyyy-MM-dd"/></td>
+									<%-- <td><a href='/board/get?bno=<c:out value="${board.bno}"/>'>  
+									<c:out value="${board.title }"/></a></td> --%>
+									<!-- 페이지번호는 조회 페이지에 전달되지 않기 때문에 조회페이지에서 목폭으로 이동할 때는 아무런 정보없이 /board/list를 호출함 -->
+									
+									<td><a class='move' href='<c:out value="${board.bno}"/>'>  
+									<c:out value="${board.title}"/></a></td>
+									
+									<td><c:out value="${board.writer}"/></td>
+									<td><fmt:formatDate value="${board.regdate}" pattern="yyyy-MM-dd"/></td>
+									<td><fmt:formatDate value="${board.updateDate}" pattern="yyyy-MM-dd"/></td>
 								</tr>
 							</c:forEach>
-						</tbody>
+						<!-- </tbody> -->
 					</table>
-					<!-- Modal 추가 -->
-					<!-- <div>를 화면에 특정위치에 보여주고, 배경이 되는 <div>에 배경색을 입혀 처리
-						활성화된 <div>를 선택하지 않고, 다시 원래화면을 볼 수 없도록 막기 때문에 메세지를 보여는데 효과적인 방식 -->
-					<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-						<div class="modal-dialog">
-							<div class="modal-content">
-								<div class="modal-header">
-									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-									<h4 class="modal-title" id="myModalLabel">Modal title</h4>
-								</div>
-							<div class="modal-body">
-								처리가 완료되었습니다.
-							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-								<button type="button" class="btn btn-primary">Save changes</button>
-							</div>
-							</div>
-	 						<!-- /.modal-content -->
-	                    </div>
-	                    <!-- /.modal-dialog -->
+					
+					<div class='pull-right'>
+						<ul class="pagination">
+							<!-- PageDTO.pageMaker -->
+							<c:if test="${pageMaker.prev}">
+								<li class="paginate_button previous">
+								<a href="${pageMaker.startPage-1}">Previous</a>
+								</li>
+							</c:if>
+							
+							<!-- 이상태로 페이지번호를 클릭하면 URL존재하지않는다고 뜸 -->
+							<c:forEach var="num" begin="${pageMaker.startPage}"
+								end="${pageMaker.endPage}">
+								<li class="paginate_button ${pageMaker.cri.pageNum==num ? "active": ""}">
+								<a href="${num}">${num}</a></li>
+							</c:forEach>
+							
+							<c:if test="${pageMaker.next}">
+								<li class="paginate_button next">
+								<a href="${pageMaker.endPage +1}">Next</a></li>
+							</c:if>
+						</ul>
 					</div>
-					<!-- /.modal -->
+					<!-- end Pagination -->
 				</div>
 				<!-- /.panel-body -->
+				
+				<form id='actionForm' action="/board/list" method='get'>
+					<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'>
+					<input type='hidden' name='amount' value='${pageMaker.cri.amount}'>
+					
+					<%-- <input type='hidden' name='type'
+						value='<c:out value="${pageMaker.cri.type}"/>'>
+					<input type='hidden' name='keyword'> --%>
+				</form>
+				
+				<!-- Modal 추가 -->
+				<!-- <div>를 화면에 특정위치에 보여주고, 배경이 되는 <div>에 배경색을 입혀 처리
+					활성화된 <div>를 선택하지 않고, 다시 원래화면을 볼 수 없도록 막기 때문에 메세지를 보여는데 효과적인 방식 -->
+				<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+								<h4 class="modal-title" id="myModalLabel">Modal title</h4>
+							</div>
+						<div class="modal-body">
+							처리가 완료되었습니다.
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							<button type="button" class="btn btn-primary">Save changes</button>
+						</div>
+						</div>
+	 					<!-- /.modal-content -->
+	               </div>
+	               <!-- /.modal-dialog -->
+				</div>
+				<!-- /.modal -->
 			</div>
-				<!-- /.panel -->
+			<!-- /.panel -->
 		</div>
-			<!-- /.col-lg-12 -->
+		<!-- /.col-lg-12 -->	
 	</div>
+
+	<!-- /.row -->		
+
 	<!-- <script type="text/javascript">
 		$(document).ready(function() {
 			var result = '<c:out value="${result}"/>';
 		});
 	</script> -->
-	
-	<!-- /.row -->
-	
- 	<%@include file="../includes/footer.jsp" %>
 	<script type="text/javascript">
 	/* jQuery 처리/header,footer 미적용시 활성화안됨/header 소스 안에 notifications.html 포함 */
 		$(document).ready(function(){
@@ -150,7 +148,28 @@
 			$("#regBtn").on("click",function(){ 
 				self.location="/board/register";
 			});
+			
+			var actionForm=$("#actionForm");
+			
+			$(".paginate_button a").on("click",function(e){
+				e.preventDefault(); /* <a>태그를 클릭해도 페이지 이동이 없도록 처리 */
+				console.log('click');
+				actionForm.find("input[name='pageNum']").val($(this).attr("href"));
+				/* <form> 태그내 pageNum 값은 href속성값으로 변경 */
+				
+				actionForm.submit();
+			});
+			
+			$(".move").on("click",function(e){
+				e.preventDefalut();
+				actionForm.append("<input type='hidden' name='bno' value='"+
+						$(this).attr("href")+"'>");
+				actionForm.attr("action","/board/get");
+				actionForm.submit();
+			});
+			/* 게시물 제목을 클릭하면 pageNum와 amount 파라미터가 추가로 전달됨 */
 		});
 	</script>
-</body>
-</html>
+	
+ 	<%@include file="../includes/footer.jsp" %>
+	
