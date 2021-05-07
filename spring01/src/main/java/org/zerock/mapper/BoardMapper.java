@@ -15,5 +15,7 @@ public interface BoardMapper {
 	public BoardVO read(Long bno);
 	public int delete(Long bno);
 	public int update(BoardVO board);
+	
+	public int getTotalCount(Criteria cri); /* DB에 있는 실제 모든 게시물의 수(total)를 구해서 PageDTO를 구성할 때 전달해야함*/
 }
 

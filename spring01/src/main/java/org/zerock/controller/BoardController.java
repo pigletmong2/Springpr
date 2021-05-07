@@ -35,9 +35,17 @@ public class BoardController {
 	public void list(Criteria cri,Model model) {
 		log.info("list: "+cri);
 		model.addAttribute("list",service.getList(cri));
-		model.addAttribute("pageMaker",new PageDTO(cri,123));
-//		list()는 'pageMaker'라는 이름으로 dto클래스에서 객체를 만들어 model에 담음
-//		123은 dto구성을 위해서는 전체데이터 수가 필요한데 아직 그 처리가 이뤄지지 않았으므로 임의의값임
+		/* model.addAttribute("pageMaker",new PageDTO(cri,123));
+		 * list()는 'pageMaker'라는 이름으로 dto클래스에서 객체를 만들어 model에 담음 123은 dto구성을 위해서는 전체데이터
+		 * 수가 필요한데 아직 그 처리가 이뤄지지 않았으므로 임의의값임
+		 */
+		
+		int total=service.getTotal(cri);
+		
+		log.info("total: "+total);
+		
+		model.addAttribute("pageMaker",new PageDTO(cri,total));
+		/* 전체 데이터 수를 계산해서 페이지 수를 구성함 */
 	}
 	
 //	Post방식으로 처리되는 데이터를 boardVO 타입의 인스턴스로 바인딩해서 메서드에서 활용
@@ -57,41 +65,43 @@ public class BoardController {
 	public void register() {}
 	
 	@GetMapping({"/get","/modify"}) /* /modify 추가 */
+	/* @ModelAttribute: 자동으로 Model에 데이터를 지정한 이름으로 담아줌 */
 	public void get(@RequestParam("bno") Long bno,@ModelAttribute("cri") Criteria cri,Model model){
 		log.info("/get or modify");
 		model.addAttribute("board",service.get(bno));
 	}
 	
-//	@GetMapping("/modify")
-//	public void modify(@RequestParam("bno") Long bno,Model model){
-//		log.info("modify:"+bno);
-//		model.addAttribute("board",service.get(bno));
-//	
-//	}
-	
 	@PostMapping("/modify")
-	public String modify(BoardVO board,RedirectAttributes rttr) {
+	public String modify(BoardVO board,@ModelAttribute("cri") Criteria cri,RedirectAttributes rttr) {
 		log.info("modify:"+board);
 		
 		if(service.modify(board)) {
 			rttr.addFlashAttribute("result","success");
 		}
+		/* url뒤 원래의 페이지로 이동하기 위함 */
+		rttr.addAttribute("pageNum",cri.getPageNum());
+		rttr.addAttribute("amount",cri.getAmount());
+		/*수정삭체 처리는 redirect방식으로 동작하므로 type과 keyword조건을 포함시켜야함*/
+		rttr.addAttribute("type",cri.getType());
+		rttr.addAttribute("keyword",cri.getKeyword());
+		
 		return "redirect:/board/list";
 	}
 	
 	
 	@PostMapping("/remove")
-	public String remove(@RequestParam("bno") Long bno,RedirectAttributes rttr) {
+	public String remove(@RequestParam("bno") Long bno,@ModelAttribute("cri") Criteria cri,RedirectAttributes rttr) {
 		log.info("remove..."+bno);
 		if(service.remove(bno)) {
 			rttr.addFlashAttribute("result","success");
 		}
+		
+		rttr.addAttribute("pageNum",cri.getPageNum());
+		rttr.addAttribute("amount",cri.getAmount());
+		
+		rttr.addAttribute("type",cri.getType());
+		rttr.addAttribute("keyword",cri.getKeyword());
+		
 		return "redirect:/board/list";
 	}
-//	@GetMapping("/remove")
-//	public String remove(@RequestParam("bno") Long bno) {
-//		service.remove(bno);
-//		return "redirect:/board/list";
-//	}
-
 }

@@ -6,56 +6,7 @@
 <!-- 게시물 등록작업은 post로 처리하지만 화면에서 입력을 받아야 하므로 get 방식으로 입력페이지를 볼 수 있도록
 		BoardController에 GetMapping 메서드 추가 -->
 
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="">
-<meta name="author" content="">
-
-<title>SB Admin 2 - Bootstrap Admin Theme</title>
-
-<!-- Bootstrap Core CSS -->
-<link href="/resources/vendor/bootstrap/css/bootstrap.min.css"
-	rel="stylesheet">
-
-<!-- MetisMenu CSS -->
-<link href="/resources/vendor/metisMenu/metisMenu.min.css"
-	rel="stylesheet">
-
-<!-- DataTables CSS -->
-<link
-	href="/resources/vendor/datatables-plugins/dataTables.bootstrap.css"
-	rel="stylesheet">
-
-<!-- DataTables Responsive CSS -->
-<link
-	href="/resources/vendor/datatables-responsive/dataTables.responsive.css"
-	rel="stylesheet">
-
-<!-- Custom CSS -->
-<link href="/resources/dist/css/sb-admin-2.css" rel="stylesheet">
-
-<!-- Custom Fonts -->
-<link href="/resources/vendor/font-awesome/css/font-awesome.min.css"
-	rel="stylesheet" type="text/css">
-
-<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-<!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-</head>
-
-<body>
-
-	<%@include file="../includes/header.jsp"%>
+<%@include file="../includes/header.jsp"%>
 
 
 	<div class="row">
@@ -75,7 +26,16 @@
 				<div class="panel-body">
 
 					<form role="form" action="/board/modify" method="post">
-
+					<!-- 조회페이지에서 수정/삭제 페이지로 이동은 get방식이고 이동방식 역시 <form>태그를 이용하는 방식이므로 form 태그에 검색처리추가 -->
+					<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum}"/>'>
+					<input type='hidden' name='amount' value='<c:out value="${cri.amount}"/>'>
+					<input type='hidden' name='type' value='<c:out value="${cri.type}"/>'>
+					<input type='hidden' name='keyword' value='<c:out value="${cri.keyword}"/>'>
+					
+					<!-- pageNum와 amount 값을 form 태그내에서 같이 전송할 수 있게 추가 -->
+					<%-- <input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum}"/>'>
+					<input type='hidden' name='amount' value='c:out value="${cri.amount}"/>'>
+ --%>
 						<div class="form-group">
 							<label>Bno</label><input class="form-control" name='bno'
 							value='<c:out value="${board.bno}"/>' readonly="readonly">
@@ -156,7 +116,20 @@
 			} */else if(operation==='list'){
 				//move to list
 				formObj.attr("action","/board/list").attr("method","get");
+				var pageNumTag=$("input[name='pageNum']").clone();
+				var amountTag=$("input[name='amount']").clone();
+				
+				var keywordTag=$("input[name='keyword']").clone();
+				var typeTag=$("input[name='type']").clone();
+				
+				/* 사용자가 'List'를 클릭하면 <form>태그에서 필요한 부분만 잠시 clone(복사)해서 보관해두고
+				<form> 태그 내의 모든 내용을 지움(empty), 이후 다시 필요한 태그만 추가해서 '/board/list'를 호출함*/
 				formObj.empty();
+				formObj.append(pageNumTag);
+				formObj.append(amountTag);
+			
+				formObj.append(keywordTag);
+				formObj.append(typeTag);
 			}
 			formObj.submit();
 		});
@@ -164,7 +137,3 @@
 	</script>
 	<%@include file="../includes/footer.jsp"%>
 	
-
-</body>
-
-</html>

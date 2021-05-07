@@ -60,8 +60,36 @@
 						</tr>
 					</c:forEach>
 				</table>
-
+				
 				<%-- <div class='row'>
+					<div class="col-lg-12">
+					
+						<form id='searchForm' action="/board/list" method='get'>
+							<select name='type'>
+								<option value="">--</option>
+									<option value="T">제목</option>
+									<option value="C">내용</option>
+									<option value="W">작성자</option>
+									<option value="TC">제목 or 내용</option>
+									<option value="TW">제목 or 작성자</option>
+									<option value="TWC">제목 or 내용 or 작성자</option>
+									
+							</select>
+							<input type='text' name='keyword'/>
+							<input type='hidden' name='pageNum' value="${pageMaker.cri.pageNum}">
+							<input type='hidden' name='amount' value="${pageMaker.cri.amount}">
+							<button class="btn btn-default">검색</button>
+						</form>
+					</div>
+				</div> --%>
+				<!-- 결과후 문제점:1)3페이지를 보다가 검색을 하면 3페이지로 이동하는 문제(3페이지에서 다른 페이지 검색이 안됨)
+							2) 검색 후 페이지를 이동하면 검색조건이 사라지는 문제
+							3) 검색 후 화면에서는 어떤 검색조건과 키워드를 이용했는지 알 수 없는 문제 -->
+				
+				<!-- 검색 후에는 주소창에 검색 조건과 키워드가 같이 get방식으로 처리되므로 <select> <input>태그 내용을 수정해야함 -->
+				<!-- <select> 태그의 내부는 삼항 연산자를 이용해서 해당 조건으로 검색되면 'selected'??라는 문자열을 출력하게 해서 화면에서 선택된 항목으로 보이도록함 -->
+				<!-- 페이지번호를 클릭해서 이동할때도 검색조건과 키워드는 같이 전달되도록 수정함 -->
+				<div class='row'>
 					<div class="col-lg-12">
 
 						<form id='searchForm' action="/board/list" method='get'>
@@ -75,24 +103,19 @@
 								<option value="W"
 									<c:out value="${pageMaker.cri.type eq 'W'?'selected':''}"/>>작성자</option>
 								<option value="TC"
-									<c:out value="${pageMaker.cri.type eq 'TC'?'selected':''}"/>>제목
-									or 내용</option>
+									<c:out value="${pageMaker.cri.type eq 'TC'?'selected':''}"/>>제목 or 내용</option>
 								<option value="TW"
-									<c:out value="${pageMaker.cri.type eq 'TW'?'selected':''}"/>>제목
-									or 작성자</option>
+									<c:out value="${pageMaker.cri.type eq 'TW'?'selected':''}"/>>제목 or 작성자</option>
 								<option value="TWC"
-									<c:out value="${pageMaker.cri.type eq 'TWC'?'selected':''}"/>>제목
-									or 내용 or 작성자</option>
-							</select> <input type='text' name='keyword'
-								value='<c:out value="${pageMaker.cri.keyword}"/>' /> <input
-								type='hidden' name='pageNum'
-								value='<c:out value="${pageMaker.cri.pageNum}"/>' /> <input
-								type='hidden' name='amount'
-								value='<c:out value="${pageMaker.cri.amount}"/>' />
+									<c:out value="${pageMaker.cri.type eq 'TWC'?'selected':''}"/>>제목 or 내용 or 작성자</option>
+							</select>
+							<input type='text' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>' />
+							<input type='hidden' name='pageNum' value='<c:out value="${pageMaker.cri.pageNum}"/>' />
+							<input type='hidden' name='amount' value='<c:out value="${pageMaker.cri.amount}"/>' />
 							<button class='btn btn-default'>Search</button>
 						</form>
 					</div>
-				</div> --%>
+				</div>
 
 
 				<div class='pull-right'>
@@ -141,11 +164,10 @@
 			<form id='actionForm' action="/board/list" method='get'>
 				<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'>
 				<input type='hidden' name='amount' value='${pageMaker.cri.amount}'>
-
-				<%-- <input type='hidden' name='type'
-					value='<c:out value="${ pageMaker.cri.type }"/>'> <input
-					type='hidden' name='keyword'
-					value='<c:out value="${ pageMaker.cri.keyword }"/>'> --%>
+				<!-- 페이지 번호를 클릭해서 이동할때 검색조건과 키워드가 같이 전달되야 동일한 검색사항이 유지될 수 있다.
+					없으면 조회 수정 삭제와 해당 검색으로 나온 결과물을 동일하게 확인하기 어려움 -->
+				<input type='hidden' name='type' value='<c:out value="${pageMaker.cri.type}"/>'>
+				<input type='hidden' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>'>
 
 
 			</form>
@@ -233,7 +255,30 @@
 			actionForm.attr("action","/board/get");
 			actionForm.submit();
 			});
-/* 
+		
+		
+		var searchForm=$("#searchForm");
+		/* 검색버튼을 클릭하면 검색은 1페이지를 하도록 수정하고, 화면에 검색조건과 키워드가 보이게 처리한다 */
+		$("#searchForm button").on("click",function(e){
+			if(!searchForm.find("option:selected").val()){
+				alert("검색종류를 선택하세요");
+				return false;
+			}
+			
+			if(!searchForm.find("input[name='keyword']").val()){
+				alert("키워드를 입력하세요");
+				return false;
+			}
+			
+			searchForm.find("input[name='pageNum']").val("1");
+			/* 브라우저에서 검색버튼을 클릭하면 <form>태그의 전송은 막고, 페이지의 번호는 1이 되도록 처리 */
+			e.preventDefault();
+			/* 화면에 키워드가 없으면 검색하지 않도록 제어 */
+			
+			searchForm.submit();
+		});
+		
+		/* 
 						var searchForm = $("#searchForm");
 
 						$("#searchForm button").on(
