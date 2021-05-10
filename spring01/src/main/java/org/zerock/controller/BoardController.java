@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.zerock.domain.BoardVO;
@@ -84,7 +83,7 @@ public class BoardController {
 		/*수정삭체 처리는 redirect방식으로 동작하므로 type과 keyword조건을 포함시켜야함*/
 		rttr.addAttribute("type",cri.getType());
 		rttr.addAttribute("keyword",cri.getKeyword());
-		
+		/* getListLink를 이용하면 위의 내용 생략 가능 */
 		return "redirect:/board/list";
 	}
 	
