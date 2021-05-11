@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.zerock.domain.Criteria;
+import org.zerock.domain.ReplyPageDTO;
 import org.zerock.domain.ReplyVO;
 import org.zerock.service.ReplyService;
 
@@ -50,29 +51,16 @@ public class ReplyController {
 		 * 테스트시 content-type과 applicaiton/json으로 지정후 테스트진행해야함, 테스트번호는 기본 존재하는 번호여야함*/
 	}
 	
-	/* 특정게시물의 댓글목록 확인: getList()는 Criteria를 이용해서 파라미터를 수집, {page} 값은 Criteria를 생성해서 직접 처리해야 함
-	 * 게시물 번호는 PathVariable을 이용해서 파라미터로 처리 */
-	
-	@GetMapping(value="/pages/{bno}/{page}",produces= {MediaType.APPLICATION_XML_VALUE,
-														MediaType.APPLICATION_JSON_UTF8_VALUE})
-	public ResponseEntity<List<ReplyVO>> getList(
-			@PathVariable("page") int page,
-			@PathVariable("bno") Long bno){
-		log.info("getList..............");
-		Criteria cri=new Criteria(page,10);
-		log.info(cri);
-		
-		return new ResponseEntity<>(service.getList(cri, bno),HttpStatus.OK);
+	@GetMapping(value="/{rno}",produces={MediaType.APPLICATION_XML_VALUE,
+										MediaType.TEXT_PLAIN_VALUE})
+	public ResponseEntity<ReplyVO> get(@PathVariable("rno")Long rno){
+		log.info("get: "+rno);
+		return new ResponseEntity<>(service.get(rno),HttpStatus.OK);
 	}
+
 	
 	
-	@DeleteMapping(value="/{rno}",produces= {MediaType.APPLICATION_XML_VALUE})
-	public ResponseEntity<String> remove(@PathVariable("rno") Long rno){
-		log.info("remove"+rno);
-		return service.remove(rno)==1
-				?new ResponseEntity<>("success",HttpStatus.OK)
-						:new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-	}
+	
 	
 	/* 댓글수정은 'PUT'방식이나 'PATCH'방식을 이용하도록 처리하고, 실제 수정되는 데이터는 JSON포맷이므로
 	 * @RequestBody를 이용해서 처리한다. @RequestBody로 처리되는 데이터는 일반 파라미터나
@@ -92,4 +80,40 @@ public class ReplyController {
 				?new ResponseEntity<>("success",HttpStatus.OK)
 						:new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
+	
+	/* 특정게시물의 댓글목록 확인: getList()는 Criteria를 이용해서 파라미터를 수집, {page} 값은 Criteria를 생성해서 직접 처리해야 함
+	 * 게시물 번호는 PathVariable을 이용해서 파라미터로 처리 */
+//	@GetMapping(value="/pages/{bno}/{page}",produces= {MediaType.APPLICATION_XML_VALUE,
+//														MediaType.APPLICATION_JSON_UTF8_VALUE})
+//	public ResponseEntity<List<ReplyVO>> getList(
+//			@PathVariable("page") int page,
+//			@PathVariable("bno") Long bno){
+//		log.info("getList..............");
+//		Criteria cri=new Criteria(page,10);
+//		log.info(cri);
+//		
+//		return new ResponseEntity<>(service.getList(cri, bno),HttpStatus.OK);
+//	}
+	
+	@GetMapping(value="/pages/{bno}/{page}",produces={MediaType.APPLICATION_XML_VALUE,
+														MediaType.APPLICATION_JSON_UTF8_VALUE})
+	public ResponseEntity<ReplyPageDTO> getList(
+			@PathVariable("page") int page,
+			@PathVariable("bno") Long bno){
+		Criteria cri=new Criteria(page,10);
+		log.info("get Reply List bno: "+bno);
+		log.info("cri:"+cri);
+		
+		return new ResponseEntity<>(service.getListPage(cri,bno),HttpStatus.OK);
+	}
+	/* 삭체 */
+	@DeleteMapping(value="/{rno}",produces= {MediaType.APPLICATION_XML_VALUE})
+	public ResponseEntity<String> remove(@PathVariable("rno") Long rno){
+		log.info("remove"+rno);
+		return service.remove(rno)==1
+				?new ResponseEntity<>("success",HttpStatus.OK)
+						:new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	
+	
 }
