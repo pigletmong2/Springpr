@@ -184,7 +184,7 @@
 					
 					var str="";
 					if(list==null||list.length==0){
-						replyUL.html("");
+						/* replyUL.html(""); */
 						
 						return;
 					}
@@ -264,6 +264,10 @@
 			var modalModBtn=$("#modalModBtn");
 			var modalRemoveBtn=$("#modalRemoveBtn");
 			var modalRegisterBtn=$("#modalRegisterBtn");
+			
+			$("#modalCloseBtn").on("click",function(e){
+				modal.modal('hide');
+			});
 			
 			$("#addReplyBtn").on("click",function(e){
 				modal.find("input").val("");

@@ -89,9 +89,9 @@ var replyService=(function(){
 		$.ajax({
 			type:'delete',
 			url:'/replies/'+rno,
-			success:function(deleteResult,status,xhr){
+			success:function(result,status,xhr){
 				if(callback){
-					callback(deleteResult);
+					callback(result);
 				}
 			},
 			error:function(xhr,status,er){
@@ -111,7 +111,7 @@ var replyService=(function(){
 			url:'/replies/'+reply.rno,
 			data:JSON.stringify(reply),
 			contentType:"application/json;charset=utf-8",
-			seccess:function(result,status,xhr){
+			success:function(result,status,xhr){
 				if(callback){
 					callback(result);
 				}

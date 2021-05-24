@@ -1,7 +1,5 @@
 package org.zerock.controller;
 
-import java.util.List;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -51,15 +49,13 @@ public class ReplyController {
 		 * 테스트시 content-type과 applicaiton/json으로 지정후 테스트진행해야함, 테스트번호는 기본 존재하는 번호여야함*/
 	}
 	
+	/* 댓글조회 */
 	@GetMapping(value="/{rno}",produces={MediaType.APPLICATION_XML_VALUE,
-										MediaType.TEXT_PLAIN_VALUE})
+										MediaType.APPLICATION_JSON_UTF8_VALUE})
 	public ResponseEntity<ReplyVO> get(@PathVariable("rno")Long rno){
 		log.info("get: "+rno);
 		return new ResponseEntity<>(service.get(rno),HttpStatus.OK);
-	}
-
-	
-	
+	}/* mediatype을 잘못 입력하여 특정 댓글 조회에 오류발생 */
 	
 	
 	/* 댓글수정은 'PUT'방식이나 'PATCH'방식을 이용하도록 처리하고, 실제 수정되는 데이터는 JSON포맷이므로
